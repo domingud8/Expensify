@@ -1,0 +1,16 @@
+.vscode
+__pycache__
+.env
+env
+venv
+wenv
+node_modules/
+data/
+.env.local
+.env.development
+.env.test
+.env.production
+.idea/
+*.sqlite3
+data
+docker-compose.yml

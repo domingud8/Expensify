@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: expensify-backend-test
+  labels:
+    app: expensify-backend-test
+spec:
+  type: NodePort
+  selector:
+    app: expensify-backend-test
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 32121
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expensify-frontend-test
+  labels:
+    app: expensify-frontend-test
+spec:
+  type: NodePort
+  selector:
+    app: expensify-frontend-test
+  ports:
+    - port: 8080
+      targetPort: 80
+      nodePort: 32122
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expensify-backend-test
+  labels:
+    app: expensify-backend-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expensify-backend-test
+  template:
+    metadata:
+      labels:
+        app: expensify-backend-test
+    spec:
+  
+      nodeSelector:
+        dedicated: master
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: master
+        effect: NoSchedule
+
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - image: sasoldevchemicalsdigitalreg.azurecr.io/expensify-backend:test
+          name: expensify-backend-test
+          command: ["/app/entrypoint.sh"]
+          args: ["gunicorn", "yet.wsgi:application", "--bind", "0.0.0.0:8000"]
+          imagePullPolicy: IfNotPresent
+
+    
+          envFrom:
+          - secretRef:
+              name: expensify-test-secret
+
+          ports:
+            - containerPort: 8000
+              name: gunicorn
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expensify-frontend-test
+  labels:
+    app: expensify-frontend-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expensify-frontend-test
+  template:
+    metadata:
+      labels:
+        app: expensify-frontend-test
+    spec:
+  
+      nodeSelector:
+        dedicated: master
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: master
+        effect: NoSchedule
+
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - image: sasoldevchemicalsdigitalreg.azurecr.io/expensify-frontend:test
+          name: expensify-frontend-test
+          command: ["nginx"]
+          args: ["-g", "daemon off;"]
+          imagePullPolicy: IfNotPresent
+    
+
+          ports:
+            - containerPort: 80
+              name: nginx
