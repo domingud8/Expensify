@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Nav from "./components/nav/Nav";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div>
+      <Nav />
+        <div class="text-center text-5xl font-extrabold p-4 ...">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-300 via-yellow-300 to-pink-300">
+          
+            EXPENSIFY
+          </span>
+        </div>
+     </div>
   );
 }
 
