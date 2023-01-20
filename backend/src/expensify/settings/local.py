@@ -2,7 +2,7 @@ import os
 from .base import *
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=BASE_DIR / ".env.local", verbose=True)
+load_dotenv(dotenv_path=BASE_DIR / ".env", verbose=True)
 
 CORS_ALLOW_ALL_ORIGINS = True
 
