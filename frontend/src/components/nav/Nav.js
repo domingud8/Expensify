@@ -15,7 +15,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import Logo from '../../assets/icons/watermelon.png';
+import Logo from "../../assets/icons/watermelon.png";
 const solutions = [
   {
     name: "Analytics",
@@ -106,7 +106,7 @@ export default function Nav() {
             <a href="#">
               <span className="sr-only">Your Company</span>
               <img
-                className="h-8 w-auto sm:h-10"
+                className="animate-bounce h-8 w-auto sm:h-10"
                 src={Logo}
                 alt=""
               />
@@ -298,18 +298,11 @@ export default function Nav() {
             </Popover>
           </Popover.Group>
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a
-              href="#"
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-            >
-              Sign in
-            </a>
-            <a
-              href="#"
-              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >
-              Sign up
-            </a>
+            <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+              <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                Sign up
+              </span>
+            </button>
           </div>
         </div>
       </div>
