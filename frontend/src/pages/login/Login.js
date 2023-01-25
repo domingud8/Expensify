@@ -1,11 +1,11 @@
 import React from "react";
-import { login, checkAuthenticated, load_user } from "../../store/actions/auth";
+import { signup, login, checkAuthenticated, load_user } from "../../store/actions/auth";
 import { Navigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Button } from "flowbite-react";
-import Logo from "../../assets/icons/watermelon.png"
+import Logo from "../../assets/icons/watermelon.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,8 @@ const Login = () => {
   const loginFailed = useSelector((state) => state.auth.loginFailed);
   const redirect = useLocation().state?.redirect;
 
-  const [error, setError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,20 +24,21 @@ const Login = () => {
   const { email, password } = formData;
 
   const onChange = (e) => {
-    setError(false);
+    setLoginError(false);
+    setRegisterError(false)
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(e.target.email);
   };
 
-  const onSubmit = (e) => {
+  const onLoginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      dispatch(login(email, password));
-    }
+  
+  const onRegisterSubmit = (e) => {
+    e.preventDefault()
+		dispatch(signup(email, password))
   };
 
   useEffect(() => {
@@ -46,7 +48,7 @@ const Login = () => {
 
   useEffect(() => {
     if (loginFailed) {
-      setError(true);
+      setLoginError(true);
       setFormData({
         email: "",
         password: "",
@@ -78,42 +80,54 @@ const Login = () => {
                 budgets, and manage your money.
               </p>
             </div>
-			<div className="loginInputs flex flex-col gap-4 min-w-[50%]">
-			<div className="flex flex-col gap-1">
-            <label className="text-sm font-semibold text-white" htmlFor="email">
-              Email
-            </label>
-            <input
-              className={`bg-transparent border border-${
-                error ? "red-600" : "white"
-              } rounded-lg p-3 text-sm mb-4`}
-              type="text"
-              name="email"
-              id="email"
-              onChange={onChange}
-              // onKeyDown={handleKeyDown}
-              // value={email}
-            />
-			          <div className="flex flex-col gap-1">
-            <label className="text-sm font-semibold text-white" htmlFor="password">
-              Password
-            </label>
-            <input
-              className={`bg-transparent border border-${
-                error ? "red-600" : "white"
-              } rounded-lg p-3 text-sm mb-4`}
-              type="password"
-              name="password"
-              id="password"
-              onChange={onChange}
-              onKeyDown={handleKeyDown}
-              // value={password}
-            />
-			<Button className="!bg-red-400" onClick={onSubmit}>Login</Button>
-          {error && <div className="text-red-600">Login failed</div>}
-          </div>
-          </div>
-		  </div>
+            <div className="loginInputs flex flex-col gap-4 min-w-[50%]">
+              <div className="flex flex-col gap-1">
+                <label
+                  className="text-sm font-semibold text-white"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className={`bg-transparent border border-${
+                    loginError ? "red-600" : "white"
+                  } rounded-lg p-3 text-sm mb-4`}
+                  type="text"
+                  name="email"
+                  id="email"
+                  onChange={onChange}
+                />
+                <div className="flex flex-col gap-1">
+                  <label
+                    className="text-sm font-semibold text-white"
+                    htmlFor="password"
+                  >
+                    Password
+                  </label>
+                  <input
+                    className={`bg-transparent border border-${
+                      loginError ? "red-600" : "white"
+                    } rounded-lg p-3 text-sm mb-4`}
+                    type="password"
+                    name="password"
+                    id="password"
+                    onChange={onChange}
+                  />
+                  <div className = "flex justify-evenly">
+                    <Button className="!bg-red-400 w-1/4" onClick={onLoginSubmit}>
+                      Login
+                    </Button>
+                    {loginError && <div className="text-red-600">Login failed</div>}
+                    <Button className="!bg-red-400 w-1/4" onClick={onRegisterSubmit}>
+                      Register
+                    </Button>
+                    {registerError && (
+                      <div className="text-red-600">Registration failed</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="flex justify-center"></div>
         </div>

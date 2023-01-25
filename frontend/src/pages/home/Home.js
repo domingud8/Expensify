@@ -1,6 +1,5 @@
 import React from 'react'
 import Logo from "../../assets/icons/watermelon.png"
-import {Button} from "flowbite-react";
 const Home = () => {
   return (
     <div className="flex bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 h-screen">
@@ -24,12 +23,6 @@ const Home = () => {
           
         </div>
         <div className="flex justify-center">
-        {/* <Button className = "m-2" outline={true} pill={true} gradientDuoTone="redToYellow">
-            Sign in
-          </Button>
-          <Button className = "m-2" outline={true} pill={true} gradientDuoTone="redToYellow">
-            Sign up
-          </Button> */}
           </div>
       </div>
     </div>
